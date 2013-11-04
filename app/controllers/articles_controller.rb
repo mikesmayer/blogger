@@ -1,9 +1,9 @@
 class ArticlesController < ApplicationController
+  include ArticlesHelper
 
   def index
     @articles = Article.all
   end
-
 
   def show
     @article = Article.find(params[:id])
@@ -12,11 +12,9 @@ class ArticlesController < ApplicationController
     @comment.article_id = @article.id
   end
 
-
   def new
     @article = Article.new
   end
-
 
   def create
     @article = Article.new(article_params)
@@ -25,11 +23,6 @@ class ArticlesController < ApplicationController
     flash.notice = "Article '#{@article.title}' Created. Yay!"
 
     redirect_to article_path(@article)
-  end
-
-
-  def article_params
-    params.require(:article).permit(:title, :body)
   end
 
   def destroy
